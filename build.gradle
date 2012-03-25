@@ -1,0 +1,39 @@
+apply plugin: 'war'
+buildscript {
+	repositories {
+		ivy {
+			name = 'gradle_templates'
+			artifactPattern "http://launchpad.net/[organization]/trunk/[revision]/+download/[artifact]-[revision].jar"
+		}
+	}
+	dependencies {
+		classpath 'gradle-templates:templates:1.2'
+	}
+}
+// Check to make sure templates.TemplatesPlugin isn't already added.
+if (!project.plugins.findPlugin(templates.TemplatesPlugin)) {
+	project.apply(plugin: templates.TemplatesPlugin)
+}
+
+repositories {
+    mavenCentral()
+}
+
+apply from: 'http://launchpad.net/gradle-templates/trunk/latest/+download/apply.groovy'
+
+task copyToLib(type: Copy) {
+    into "$buildDir/../output/lib"
+    from configurations.runtime
+}
+
+task copyToTomcat(type: Copy) {
+    from(file("$buildDir/libs"))
+    into("D:\\tomcat7\\webapps")
+}
+
+dependencies {
+    compile 'org.apache.tomcat:servlet-api:6.0.35'
+    compile 'org.springframework:spring-webmvc:3.1.1.RELEASE'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.5'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.5'
+}
