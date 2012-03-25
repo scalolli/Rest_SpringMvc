@@ -24,6 +24,9 @@ apply from: 'http://launchpad.net/gradle-templates/trunk/latest/+download/apply.
 task copyToLib(type: Copy) {
     into "$buildDir/../output/lib"
     from configurations.runtime
+
+    into "$buildDir/../output/lib"
+    from configurations.testCompile
 }
 
 task copyToTomcat(type: Copy) {
@@ -36,4 +39,9 @@ dependencies {
     compile 'org.springframework:spring-webmvc:3.1.1.RELEASE'
     compile 'org.codehaus.jackson:jackson-core-asl:1.9.5'
     compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.5'
+    compile 'org.apache.poi:poi:3.7'
+    compile 'org.apache.poi:poi-ooxml:3.7'
+    compile 'junit:junit:4.10'
+    compile 'joda-time:joda-time:2.1'
+    testCompile 'org.springframework:spring-test:3.1.1.RELEASE'
 }
